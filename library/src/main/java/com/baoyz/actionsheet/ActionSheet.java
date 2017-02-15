@@ -70,6 +70,7 @@ public class ActionSheet extends Fragment implements View.OnClickListener {
 
     private boolean mDismissed = true;
     private ActionSheetListener mListener;
+    private Bundle mExtras;
     private View mView;
     private LinearLayout mPanel;
     private ViewGroup mGroup;
@@ -388,6 +389,14 @@ public class ActionSheet extends Fragment implements View.OnClickListener {
         mListener = listener;
     }
 
+    public void setExtras(Bundle extras) {
+        mExtras = extras;
+    }
+
+    public Bundle getExtras() {
+        return mExtras;
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == ActionSheet.BG_VIEW_ID && !getCancelableOnTouchOutside()) {
@@ -467,6 +476,7 @@ public class ActionSheet extends Fragment implements View.OnClickListener {
         private String mTag = "actionSheet";
         private boolean mCancelableOnTouchOutside;
         private ActionSheetListener mListener;
+        private Bundle mExtras;
 
         public Builder(Context context, FragmentManager fragmentManager) {
             mContext = context;
@@ -497,6 +507,11 @@ public class ActionSheet extends Fragment implements View.OnClickListener {
             return this;
         }
 
+        public Builder setExtras(Bundle extras) {
+            this.mExtras = extras;
+            return this;
+        }
+
         public Builder setCancelableOnTouchOutside(boolean cancelable) {
             mCancelableOnTouchOutside = cancelable;
             return this;
@@ -515,6 +530,7 @@ public class ActionSheet extends Fragment implements View.OnClickListener {
             ActionSheet actionSheet = (ActionSheet) Fragment.instantiate(
                     mContext, ActionSheet.class.getName(), prepareArguments());
             actionSheet.setActionSheetListener(mListener);
+            actionSheet.setExtras(mExtras);
             actionSheet.show(mFragmentManager, mTag);
             return actionSheet;
         }
